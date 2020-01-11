@@ -42,7 +42,6 @@ class LogAnalizer < Sinatra::Base
       select("users.country as country, categories.title as category").
       joins("JOIN categories ON actions.path = categories.title").
       joins(:user).
-      order("category").
       each do |rec|
         res[rec['category']].merge!({ rec['country'] => 1 }) do |_, oval, nval|
           oval.to_i + nval.to_i
@@ -52,13 +51,45 @@ class LogAnalizer < Sinatra::Base
     @results =
       res.keys.each_with_object({}) do |category, hash|
         hash[category] = res[category].max_by { |k, v| v }
-      end
+      end.sort_by { |k, v| k }
 
     erb :categories_liked_by_countries
   end
 
   # 3
   get '/views_by_day_time' do
+    res = Category.all.each_with_object({}) {|c, h| h[c.title] = []}
+
+    times = {
+      morning: [*5..11],
+      day: [*12..16],
+      evening: [*17..24],
+      night: [*01..04]
+    }
+
+    Category.
+      select("title as title, actions.created_at as visit_time").
+      joins("join actions on actions.path = categories.title").
+      each do |cat|
+        res[cat['title']] << cat['visit_time']
+      end
+
+    res.transform_values! do |dates|
+      day_times = { morning: 0, day: 0, evening: 0, night: 0 }
+
+      times.each do |day_time, hours|
+        dates.each do |date|
+          if hours.include?(date.to_time.hour)
+            day_times[day_time] += 1
+          end
+        end
+      end
+
+      day_times.max_by { |d, v| v }
+    end
+
+    @results = res.sort_by { |k, v| k }
+
     erb :views_by_day_time
   end
 

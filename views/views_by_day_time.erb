@@ -1,1 +1,31 @@
 <h1>В какое время суток чаще всего просматривают определенную категорию товаров?</h1>
+
+<table>
+  <thead>
+    <td>
+      Категория
+    </td>
+    <td>
+      Время суток
+    </td>
+    <td>
+      Количество просмотров
+    </td>
+  </thead>
+  <tbody>
+    <% times_t = { morning: 'Утро', day: 'День', evening: 'Вечер', night: 'Ночь' } %>
+    <% @results.each do |category, (day_time, count)| %>
+      <tr>
+        <td>
+          <%= category %>
+        </td>
+        <td>
+          <%= times_t[day_time] %>
+        </td>
+        <td align='center'>
+           <%= count %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

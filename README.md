@@ -14,7 +14,7 @@ bundle exec rake db:seed
 Для запуска сервера необходимо выполнить следующие команды в консоли:
 
 ```
-cd log_analizer
+cd log-analizer
 bundle install
 
 bundle exec rackup

@@ -1,0 +1,26 @@
+<h1>Посетители из какой страны чаще всего интересуются товарами из определенных категорий?</h1>
+
+<table>
+  <tr>
+    <thead>
+      <td>Категория</td>
+      <td>Страна</td>
+      <td>Общее количество просмотров категорий</td>
+    </thead>
+    <tbody>
+      <% @results.each do |category, country| %>
+        <tr>
+          <td>
+            <strong><%= category %></strong>
+          </td>
+          <td>
+            <%= country[0] %>
+          </td>
+          <td align='center'>
+            <%= country[1] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </tr>
+</table>

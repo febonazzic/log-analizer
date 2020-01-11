@@ -1,0 +1,11 @@
+<h1>Какое количество пользователей совершали повторные покупки за определенный период?</h1>
+
+<form class="" action="/repeated_purchases" method="get">
+  <label for="date_start">Начало:</label>
+  <input type="date" id="date_start" name="date_start" value="<%= params[:date_start] %>" min="2018-08-01" max="2018-08-14">
+  <label for="date_end">Конец:</label>
+  <input type="date" id="date_end" name="date_end" value="<%= params[:date_end] %>" min="2018-08-01" max="2018-08-14">
+  <input type="submit" value='Отправить'>
+</form>
+
+<h2><%= @users_cnt %></h2>

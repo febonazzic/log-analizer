@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#report_date').change(function(){
+      window.location.href = '/server_load?report_date=' + $(this).val()
+    })
+  })
+</script>
+
+<h1>Какая нагрузка (число запросов) на сайт за астрономический час?</h1>
+
+<label for="report_date">Дата отчета:</label>
+<input type="date" id="report_date" name="report_date" value="<%= params[:report_date] %>" min="2018-08-01" max="2018-08-14">
+
+<%= area_chart @data %>
